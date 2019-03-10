@@ -1,0 +1,140 @@
+<div class="row">
+  <!-- <div class="col-md-6 col-sm-6 col-lg-3">
+    <div class="dash-widget clearfix card-box">
+      <span class="dash-widget-icon">
+        <i class="fa fa-id-badge" aria-hidden="true"></i>
+      </span>
+      <div class="dash-widget-info">
+        <h3>{{hrAgenciesCount}} </h3>
+        <span>HR Agencies</span>
+      </div>
+    </div>
+  </div> -->
+  <div class="col-md-6 col-sm-6 col-lg-3">
+    <div class="dash-widget clearfix card-box">
+      <span class="dash-widget-icon">
+        <i class="fa fa-building" aria-hidden="true"></i>
+      </span>
+      <div class="dash-widget-info">
+        <h3>{{ companies?.length }}</h3>
+        <span>Companies</span>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="col-md-6 col-sm-6 col-lg-3">
+    <div class="dash-widget clearfix card-box">
+      <span class="dash-widget-icon">
+        <i class="fa fa-diamond"></i>
+      </span>
+      <div class="dash-widget-info">
+        <h3>37</h3>
+        <span>Unemployed</span>
+      </div>
+    </div>
+  </div> -->
+  <div class="col-md-6 col-sm-6 col-lg-3">
+    <div class="dash-widget clearfix card-box">
+      <span class="dash-widget-icon">
+        <i class="fa fa-users" aria-hidden="true"></i>
+      </span>
+      <div class="dash-widget-info">
+        <h3>{{ profiles?.length }}</h3>
+        <span>Candidates</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-table" [ngBusy]="kompanije">
+      <div class="panel-heading">
+        <h3 class="panel-title">Companies</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table  custom-table m-b-0">
+            <thead>
+              <tr>
+                <th style="min-width:200px;">Name</th>
+                <th>Website</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="companies">
+              <tr *ngFor="let company of companies.slice(0,5)">
+                <td style="min-width:200px;">
+                  <a href="#" class="avatar" style="background:white">
+                    <img src="{{company.image}}" alt=""> </a>
+                  <h2>
+                    <a href="{{company.website}}">{{company.name}}</a>
+                  </h2>
+                </td>
+                <td>
+                  <a href="{{company.website}}">{{company.website}}</a>
+                </td>
+                <td>{{company.email}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a routerLink="/companies" class="text-primary">View all companies</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-table" [ngBusy]="kandidati">
+      <div class="panel-heading">
+        <h3 class="panel-title">Candidates</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table custom-table m-b-0">
+            <thead>
+              <tr>
+                <th style="min-width:200px;">Name</th>
+                <th style="min-width:200px;">Last name</th>
+                <th style="min-width:200px;">Email</th>
+                <th style="min-width:200px;">Address</th>
+                <th style="min-width:200px;">Phone number</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="profiles">
+              <tr *ngFor="let profile of profiles.slice(0,5)">
+                <td style="min-width:200px;">
+                  <a routerLink="/profile/{{profile.email}}" class="avatar">
+                    <img src="{{profile.image}}" alt="">
+                  </a>
+                  <h2>
+                    <a routerLink="/profile/{{profile.email}}">
+                      {{profile.firstName}}
+                    </a>
+                  </h2>
+                </td>
+                <td style="min-width:200px;">
+                  {{profile.lastName}}
+                </td>
+                <td style="min-width:200px;">
+                  {{profile.email}}
+                </td>
+                <td style="min-width:200px;">
+                  {{profile.address}}
+                </td>
+                <td style="min-width:200px;">
+                  {{profile.phoneNumber}}
+                </td>
+
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a routerLink="/employees" class="text-primary">View all candidates</a>
+      </div>
+    </div>
+  </div>
+</div>

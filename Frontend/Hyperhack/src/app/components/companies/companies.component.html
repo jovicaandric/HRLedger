@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-xs-4">
+      <h4 class="page-title">Companies</h4>
+    </div>
+  </div>
+<div [ngBusy]="busy" >
+    <app-company-table *ngIf="companies"  [companies]="companies" ></app-company-table>
+
+</div>
+<!-- 
+<div class="panel panel-table">
+  <div class="panel-heading">
+    <h3 class="panel-title">Payments</h3>
+  </div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-striped custom-table m-b-0">
+        <thead>
+          <tr>
+            <th>Invoice ID</th>
+            <th>Client</th>
+            <th>Payment Type</th>
+            <th>Paid Date</th>
+            <th>Paid Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a href="invoice-view.html">#INV-0004</a>
+            </td>
+            <td>
+              <h2>
+                <a href="#">Barry Cuda</a>
+              </h2>
+            </td>
+            <td>Paypal</td>
+            <td>11 Jun 2017</td>
+            <td>$380</td>
+          </tr>
+          <tr>
+            <td>
+              <a href="invoice-view.html">#INV-0005</a>
+            </td>
+            <td>
+              <h2>
+                <a href="#">Tressa Wexler</a>
+              </h2>
+            </td>
+            <td>Paypal</td>
+            <td>21 Jul 2017</td>
+            <td>$500</td>
+          </tr>
+          <tr>
+            <td>
+              <a href="invoice-view.html">#INV-0006</a>
+            </td>
+            <td>
+              <h2>
+                <a href="#">Ruby Bartlett</a>
+              </h2>
+            </td>
+            <td>Paypal</td>
+            <td>28 Aug 2017</td>
+            <td>$60</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <a href="payments.html" class="text-primary">View all payments</a>
+  </div>
+</div> -->

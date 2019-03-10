@@ -1,0 +1,7 @@
+{
+    "api": {
+        "target": "http://13.95.93.126/api/",
+        "secure": false,
+        "changeOrigin": true
+    }
+}

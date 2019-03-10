@@ -1,0 +1,178 @@
+/**
+ * Write your model definitions here
+ */
+
+namespace org.hrledger.cv
+
+// Kompanija koja ima pristum mrezi a i ne mora
+
+participant Company  identified by companyId
+{
+  o String companyId
+  o String name
+  o String email optional
+  o String website optional
+  o String image optional
+}
+
+// HR agencija
+participant HRAgency extends Company {
+}
+
+
+// Profil korisnika, nejgov portfolio
+asset Profile identified by email
+{
+  o String email
+  o String firstName
+  o String lastName 
+  o String address optional
+  o String phoneNumber optional
+  o String gender
+  o String image optional
+  o DateTime birthDate optional
+}
+
+
+
+// Projekti na kojima je klijen ucestvovao
+//asset Project identified by projectId {
+//  o String projectId
+//  o String projectName
+//  o DateTime startDate
+//  o DateTime endDate optional
+//  o String description optional
+//  o String position optional
+//}
+
+asset Education identified by educationId
+{
+ 	o String educationId
+   	o String name
+    o DateTime startDate
+    o DateTime endDate optional
+    o String description optional
+    o String grade optional
+    o ValidationStatus status
+    --> Company validatedBy optional
+    --> Profile profile
+}
+
+
+// Radno iskustvo klijenta
+asset Employment identified by employmentId {
+  o String employmentId
+  o EmploymentType employmentType
+  o DateTime startDate
+  o DateTime endDate optional
+  o String position
+  o String description optional
+  o ValidationStatus status
+  --> Company company
+  --> Company validatedBy optional
+  --> Profile profile
+}
+
+// skilovi 
+asset  Skill identified by skillId {
+  o String skillId
+  o String  skillName
+  o Double[] grades optional
+  --> Company[] companies optional
+  --> Profile profile
+}
+
+
+enum EmploymentType
+{
+   o Employment
+   o Project
+}
+
+
+// status validacije
+enum ValidationStatus {
+  o NONE
+  o APPROVED
+  o DISAPPROVED
+}
+
+transaction AddEmployment {
+  --> Employment employment
+  --> Profile profile
+}
+
+transaction AddEducation {
+  --> Education education
+  --> Profile profile
+}
+
+
+transaction AddSkill {
+  --> Skill skill
+  --> Profile profile
+}
+
+
+
+transaction RemoveEmployment {
+  --> Employment employment
+  --> Profile profile
+}
+
+transaction RemoveEducation {
+  --> Education education
+  --> Profile profile
+}
+
+
+transaction RemoveSkill {
+  --> Skill skill
+  --> Profile profile
+}
+
+
+transaction UpdateEmployment {
+  --> Employment employment
+  --> Company company
+  o ValidationStatus employmentStatus
+}
+
+
+event UpdateEmploymentEvent {
+    o Employment employment
+    o ValidationStatus oldStatus
+}
+
+
+transaction UpdateEducation {
+  --> Education education
+  --> Company company
+  o ValidationStatus educationStatus
+}
+
+
+event UpdateEducationEvent {
+    o Education education
+    o ValidationStatus oldStatus
+}
+
+
+transaction RateSkill {
+  --> Skill skill
+  --> Company company
+  o Double rate
+}
+
+
+event RateSkillEvent {
+  --> Skill skill
+  o Double average
+}
+
+event NotifyCompany{
+  --> Company company
+  --> Employment employment optional
+  --> Skill skill optional
+  --> Education education optional
+}

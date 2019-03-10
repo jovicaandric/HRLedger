@@ -1,0 +1,529 @@
+<div class="row">
+  <div class="col-sm-8">
+    <h4 class="page-title">Profile</h4>
+  </div>
+
+  <div class="col-sm-4 text-right m-b-30">
+    <a href="edit-profile.html" class="btn btn-primary rounded">
+      <i class="fa fa-plus"></i> Edit Profile</a>
+  </div>
+</div>
+<div class="card-box">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="profile-view">
+        <div class="profile-img-wrap">
+          <div class="profile-img">
+            <a href="#">
+                <img class="avatar" *ngIf="employee && employee.image && employee.image.length > 0 " src="{{ employee?.image}}" alt="">
+                <img class="avatar" *ngIf="!employee || !employee.image  || employee.image.length == 0 " src="assets/img/user.jpg" alt="">
+            </a>
+          </div>
+        </div>
+        <div class="profile-basic" [ngBusy]="busy">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="profile-info-left">
+                <h3 class="user-name m-t-0 m-b-0">{{employee?.firstName}} {{employee?.lastName}}</h3>
+                <small class="text-muted">Web Designer</small>
+                <div class="staff-msg">
+                  <a href="#" class="btn btn-custom">Send Message</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <ul class="personal-info">
+                <li>
+                  <span class="title">Phone:</span>
+                  <span class="text">
+                    <a href="#">{{employee?.phoneNumber}}</a>
+                  </span>
+                </li>
+                <li>
+                  <span class="title">Email:</span>
+                  <span class="text">
+                    <a href="#">{{email}}</a>
+                  </span>
+                </li>
+                <li>
+                  <span class="title">Birthday:</span>
+                  <span class="text">{{employee?.birthDate | date:'dd.MM.yyyy'}}</span>
+                </li>
+                <li>
+                  <span class="title">Address:</span>
+                  <span class="text">{{employee?.address}}</span>
+                </li>
+                <li>
+                  <span class="title">Gender:</span>
+                  <span class="text">{{employee?.gender}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5" *ngIf="employee && employee.skills">
+    <div class="panel panel-table">
+      <div class="panel-heading">
+        <h3 class="panel-title">Skills </h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped custom-table m-b-0">
+            <thead>
+              <tr>
+                <th style="width:30%">Skill Name </th>
+                <th style="width:20%">Average Grade</th>
+                <th style="width:50%">Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of employee?.skills">
+                <td>
+                  {{s.skillName}}
+                </td>
+                <td>
+                  {{s.avg}}
+                </td>
+                <td>
+                  <ul class="pagination" [ngBusy]="busy4">
+                    <li class="paginate_button active" *ngFor="let item of ocene">
+                      <a (click)="rateSkill(s,item)" style="margin-left:5px;padding:4px 8px;">{{item}}</a>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7" *ngIf="employee && employee.education">
+    <div class="card-box">
+      <h3 class="card-title">
+        Education
+        <div class="pull-right">
+          <button class="btn btn-primary rounded" style="font-size: 10px" (click)="educationModal.show()">
+            <i class="fa fa-plus"></i> Add
+          </button>
+        </div>
+      </h3>
+      <div class="experience-box">
+        <ul class="experience-list" [ngBusy]="busy2">
+          <li *ngFor="let e of employee?.education">
+            <div class="experience-user">
+              <div class="before-circle"></div>
+            </div>
+            <div class="experience-content">
+              <div class="timeline-content">
+                <a href="" class="name">{{e.name}}</a>
+                <span class="time">{{e.startDate | date:'dd.MM.yyyy'}} - {{e.endDate | date:'dd.MM.yyyy' }}</span>
+                <span *ngIf="e.status=='APPROVED'" class="label label-success-border">Approved</span>
+                <span *ngIf="e.status=='DISAPPROVED'" class="label label-danger-border">Disapproved</span>
+                <span *ngIf="e.status=='NONE'">
+                  <span>
+                    <div class="dropdown action-label">
+                      <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-dot-circle-o text-warning"></i> Not Rated
+                        <i class="caret"></i>
+                      </a>
+                      <ul class="dropdown-menu pull-right">
+                        <li>
+                          <a (click)="validateEducation(e,'APPROVED')">
+                            <i class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                        </li>
+                        <li>
+                          <a (click)="validateEducation(e,'DISAPPROVED')">
+                            <i class="fa fa-dot-circle-o text-danger"></i> Disapproved</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-box m-b-0" *ngIf="employee && employee.employments">
+      <h3 class="card-title">
+        Experience
+        <div class="pull-right">
+          <button (click)="employmentsModal.show()" class="btn btn-primary rounded" style="font-size: 10px">
+            <i class="fa fa-plus"></i> Add
+          </button>
+        </div>
+      </h3>
+      <div class="experience-box">
+        <ul class="experience-list" [ngBusy]="busy3">
+          <li *ngFor="let exp of employee?.employments">
+            <div class="experience-user">
+              <div class="before-circle"></div>
+            </div>
+            <div class="experience-content">
+              <div class="timeline-content">
+                <a class="name">{{exp.position}} at {{ exp.company.split('#')[1] }}</a>
+                <span class="time">{{exp.startDate | date:'dd.MM.yyyy'}} - {{exp.endDate | date:'dd.MM.yyyy'}}</span>
+                <span *ngIf="exp.status=='APPROVED'" class="label label-success-border">Approved</span>
+                <span *ngIf="exp.status=='DISAPPROVED'" class="label label-danger-border">Disapproved</span>
+                <span *ngIf="exp.status=='NONE'">
+                  <span>
+                    <div class="dropdown action-label">
+                      <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-dot-circle-o text-warning"></i> Not Rated
+                        <i class="caret"></i>
+                      </a>
+                      <ul class="dropdown-menu pull-right">
+                        <li>
+                          <a (click)="validateEmployment(exp,'APPROVED')">
+                            <i class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                        </li>
+                        <li>
+                          <a (click)="validateEmployment(exp,'DISAPPROVED')">
+                            <i class="fa fa-dot-circle-o text-danger"></i> Disapproved</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="notification-box">
+  <div class="msg-sidebar notifications msg-noti">
+    <div class="topnav-dropdown-header">
+      <span>Messages</span>
+    </div>
+    <div class="drop-scroll msg-list-scroll">
+      <ul class="list-box">
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">R</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author">Richard Miles </span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item new-message">
+              <div class="list-left">
+                <span class="avatar">J</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author">John Doe</span>
+                <span class="message-time">1 Aug</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">T</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author"> Tarah Shropshire </span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">M</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author">Mike Litorus</span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">C</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author"> Catherine Manseau </span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">D</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author"> Domenic Houston </span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">B</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author"> Buster Wigton </span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">R</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author"> Rolland Webber </span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">C</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author"> Claire Mapes </span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">M</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author">Melita Faucher</span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">J</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author">Jeffery Lalor</span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">L</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author">Loren Gatlin</span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="chat.html">
+            <div class="list-item">
+              <div class="list-left">
+                <span class="avatar">T</span>
+              </div>
+              <div class="list-body">
+                <span class="message-author">Tarah Shropshire</span>
+                <span class="message-time">12:28 AM</span>
+                <div class="clearfix"></div>
+                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="topnav-dropdown-footer">
+      <a href="chat.html">See all messages</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" bsModal #educationModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Education</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="educationModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">School</label>
+              <input type="text" class="form-control floating" name="school" [(ngModel)]="educationToAdd.name">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Start Date</label>
+              <div class="cal-icon">
+                <input type="text" class="form-control floating" [(ngModel)]="educationToAdd.startDate" bsDatepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">End Date</label>
+              <div class="cal-icon">
+                <input type="text" class="form-control floating" [(ngModel)]="educationToAdd.endDate" bsDatepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Description</label>
+              <input type="text" class="form-control floating" name="address" [(ngModel)]="educationToAdd.description">
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-white" (click)="educationModal.hide()">Cancel</button>
+        <button class="btn btn-primary" (click)="addEducation();educationModal.hide()">Save education</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" bsModal #employmentsModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Employment</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="employmentsModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Company</label>
+
+              <select type="text" class="form-control floating" name="firstname" [(ngModel)]="employmentToAdd.company">
+                <option>None</option>
+                <option *ngFor="let com of companies" [ngValue]="com">{{com.name}}</option>
+
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Start Date</label>
+              <div class="cal-icon">
+                <input type="text" class="form-control floating" [(ngModel)]="employmentToAdd.startDate" bsDatepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">End Date</label>
+              <div class="cal-icon">
+                <input type="text" class="form-control floating" [(ngModel)]="employmentToAdd.endDate" bsDatepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Position</label>
+              <input type="text" class="form-control floating" name="address" [(ngModel)]="employmentToAdd.position">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Description</label>
+              <input type="text" class="form-control floating" name="address" [(ngModel)]="employmentToAdd.description">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-white" (click)="employmentsModal.hide()">Cancel</button>
+        <button class="btn btn-primary" (click)="addEmployment();employmentsModal.hide()">Save employment</button>
+      </div>
+    </div>
+  </div>
+</div>

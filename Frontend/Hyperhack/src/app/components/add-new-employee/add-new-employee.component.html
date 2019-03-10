@@ -1,0 +1,280 @@
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <div class="card-box">
+      <div class="card-title">
+        <h3>Add New Candidate
+        </h3>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group form-focus">
+            <label class="control-label">Firstname</label>
+            <input type="text" class="form-control floating" name="firstname" [(ngModel)]="profile.firstName">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group form-focus">
+            <label class="control-label">Lastname</label>
+            <input type="text" class="form-control floating" name="lastname" [(ngModel)]="profile.lastName">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group form-focus">
+            <label class="control-label">Email</label>
+            <input type="text" class="form-control floating" name="email" [(ngModel)]="profile.email">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group form-focus">
+            <label class="control-label">Gender</label>
+            <select type="text" class="form-control floating" name="gender" [(ngModel)]="profile.gender">
+              <option value="M" selected>Male</option>
+              <option value="F">Female</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group form-focus">
+            <label class="control-label">Address</label>
+            <input type="text" class="form-control floating" name="address" [(ngModel)]="profile.address">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group form-focus">
+            <label class=" control-label">Phone Number</label>
+            <input type="text" class="form-control floating" name="phone" [(ngModel)]="profile.phoneNumber">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group form-focus">
+            <label class="control-label">Birth Date</label>
+            <div class="cal-icon">
+              <input type="text" class="form-control floating" [(ngModel)]="profile.birthDate" bsDatepicker>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <div class="form-group form-focus">
+            <label class="control-label">Add Skills</label>
+            <input type="text" #s class="form-control floating" name="s" [(ngModel)]="newSkill" style="display:inline;">
+          </div>
+        </div>
+        <div class="col-md-2" style="margin-top:15px;padding-left:0">
+          <div class="task-container">
+            <span class="task-action-btn task-check">
+              <span class="action-circle large complete-btn" (click)="skills.push(s.value);s.value=''" title="Add New Skill">
+                <i class="material-icons">add</i>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-12" *ngIf="skills.length>0">
+          Skills
+          <div class="task-wrapper">
+            <div class="task-list-container">
+              <div class="task-list-body">
+                <ul id="task-list">
+                  <li class="task" *ngFor="let skill of skills;let i=index">
+                    <div class="task-container">
+                      <span class="task-label" contenteditable="true">{{skill}}</span>
+                      <span class="task-action-btn task-btn-right">
+                        <span class="action-circle large delete-btn" (click)="skills.splice(i,1)" title="Delete Task">
+                          <i class="material-icons">delete</i>
+                        </span>
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <button type="button" class="btn btn-primary" (click)="employmentsModal.show()" style="height:50px;margin-bottom:15px">Add Experience</button>
+        </div>
+        <div class="col-md-12" *ngIf="employments.length>0">
+          Employments
+          <div class="task-wrapper">
+            <div class="task-list-container">
+              <div class="task-list-body">
+                <ul id="task-list">
+                  <li class="task" *ngFor="let emp of employments;let i=index">
+                    <div class="task-container">
+                      <span class="task-label" contenteditable="true">{{emp.position}}@{{emp.company.name}}</span>
+                      <span class="task-action-btn task-btn-right">
+                        <span class="action-circle large delete-btn" (click)="employments.splice(i,1)" title="Delete Task">
+                          <i class="material-icons">delete</i>
+                        </span>
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <button type="button" class="btn btn-primary" (click)="educationModal.show()" style="height:50px;margin-bottom:15px">Add Education</button>
+        </div>
+        <div class="col-md-12" *ngIf="education.length>0">
+          Education
+          <div class="task-wrapper">
+            <div class="task-list-container">
+              <div class="task-list-body">
+                <ul id="task-list">
+                  <li class="task" *ngFor="let e of education;let i=index">
+                    <div class="task-container">
+                      <span class="task-label" contenteditable="true">{{e.name}}</span>
+                      <span class="task-action-btn task-btn-right">
+                        <span class="action-circle large delete-btn" (click)="education.splice(i,1)" title="Delete Task">
+                          <i class="material-icons">delete</i>
+                        </span>
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12" style="padding-top:50px;">
+            <button class="btn btn-primary" (click)="addEmployee()" style="float:right;">Save changes</button>
+            <button class="btn btn-white" (click)="clearEmployee()" style="float:right;margin-right:20px;">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #employmentsModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Employment</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="employmentsModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Company</label>
+
+              <select type="text" class="form-control floating" name="firstname" [(ngModel)]="employment.company">
+                <option>None</option>
+                <option *ngFor="let com of companies" [ngValue]="com">{{com.name}}</option>
+
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Start Date</label>
+              <div class="cal-icon">
+                <input type="text" class="form-control floating" [(ngModel)]="employment.startDate" bsDatepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">End Date</label>
+              <div class="cal-icon">
+                <input type="text" class="form-control floating" [(ngModel)]="employment.endDate" bsDatepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Position</label>
+              <input type="text" class="form-control floating" name="address" [(ngModel)]="employment.position">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Description</label>
+              <input type="text" class="form-control floating" name="address" [(ngModel)]="employment.description">
+            </div>
+          </div>
+          <!-- <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Status</label>
+              <select type="text" class="form-control floating" name="firstname" [(ngModel)]="employment.status">
+                <option value="EmploymentStatus.NONE" selected>NONE</option>
+                <option value="EmploymentStatus.APPROVED">APPROVED</option>
+                <option value="EmploymentStatus.DISAPROVED">DISAPROVED</option>
+              </select>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-white" (click)="employmentsModal.hide()">Cancel</button>
+        <button class="btn btn-primary" (click)="addEmployment();employmentsModal.hide()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #educationModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Education</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="educationModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">School</label>
+              <input type="text" class="form-control floating" name="school" [(ngModel)]="edu.name">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Start Date</label>
+              <div class="cal-icon">
+                <input type="text" class="form-control floating" [(ngModel)]="edu.startDate" bsDatepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">End Date</label>
+              <div class="cal-icon">
+                <input type="text" class="form-control floating" [(ngModel)]="edu.endDate" bsDatepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Description</label>
+              <input type="text" class="form-control floating" name="address" [(ngModel)]="edu.description">
+            </div>
+          </div>
+          <!-- <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Status</label>
+              <select type="text" class="form-control floating" name="firstname" [(ngModel)]="employment.status">
+                <option value="EmploymentStatus.NONE" selected>NONE</option>
+                <option value="EmploymentStatus.APPROVED">APPROVED</option>
+                <option value="EmploymentStatus.DISAPROVED">DISAPROVED</option>
+              </select>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-white" (click)="educationModal.hide()">Cancel</button>
+        <button class="btn btn-primary" (click)="addEducation();educationModal.hide()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

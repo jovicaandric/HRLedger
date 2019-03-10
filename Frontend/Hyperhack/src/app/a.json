@@ -1,0 +1,22 @@
+// {
+//     "$class": "org.hrledger.cv.Employment",
+//     "company" : "resource:org.hrledger.cv.Company#c1",
+//     "description": "sadas",
+//     "employmentId": "5bec6996-ca70-7309-79a3-319e409dc721",
+//     "employmentType": 0,
+//     "endDate": "2018-03-04T23:52:24.000Z",
+//     "position": "dsd",
+//     "profile": "resource:org.hrledger.cv.Profile#krle@imi.com",
+//     "startDate": "2018-02-04T23:00:00.000Z",
+//     "status":0
+// }
+
+// {
+//     "$class":"org.hrledger.cv.Education",
+//     "description":"dasda",
+//     "educationdId":"c8d259e4-80a5-3c87-619a-bbd9395a6e69",
+//     "endDate":"2018-03-07T00:54:46.000Z",
+//     "name":"dasdsadsa",
+//     "profile":"resource:org.hrledger.cv.Profile#aaaaaaa",
+//     "startDate":"2018-03-05T00:54:46.000Z"
+// }

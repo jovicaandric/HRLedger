@@ -1,0 +1,53 @@
+query getAllProfiles
+{
+  description: "Select all drivers older than 65."
+  statement:
+      SELECT org.hrledger.cv.Profile
+
+}
+
+query getProfileEmployments
+{
+  description: "Get all employments for profile"
+  statement:
+    SELECT org.hrledger.cv.Employment
+      WHERE (profile == _$profile)
+}
+
+query getProfileSkills
+{
+  description: "Get all skills for profile"
+  statement:
+    SELECT org.hrledger.cv.Skill
+      WHERE (profile == _$profile)
+}
+
+query getProfleEducations
+{
+  description: "Get all educations for profile"
+  statement:
+    SELECT org.hrledger.cv.Education
+      WHERE (profile == _$profile)
+}
+
+
+query getEmploymentsByValidationStatusByCompany {
+  description: "Employment-i koji nisu validarani od strane firme"
+  statement:
+    SELECT org.hrledger.cv.Employment
+     WHERE (
+       status == _$status 
+       AND company.companyId == _$companyId
+       )
+}
+
+
+//query 
+// query getProfileTatalInfo
+// {
+//   description: "profile sa vrednostima za radna iskustva, skolovanje i vestine"
+//   statement:
+//     SELECT org.hrledger.cv.Profile
+//       WHERE (profile == _$profile)
+// }
+
